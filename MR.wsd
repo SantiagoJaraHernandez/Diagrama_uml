@@ -1,0 +1,47 @@
+@startuml Diagrama_secuencias
+actor Usuario
+
+participant "Sistema" as Sistema
+participant "Carrito de Compras" as Carrito
+participant "Base de Datos" as BD
+
+Usuario -> Sistema: Inicia sesión
+activate Sistema
+Sistema -> Sistema: Verifica credenciales
+activate Sistema
+Sistema -> Carrito: Ver carrito de compras
+activate Carrito
+Carrito -> Sistema: Mostrar productos
+activate Sistema
+Sistema -> Usuario: Lista de productos
+deactivate Sistema
+Carrito -> Usuario: Agregar producto al carrito
+deactivate Carrito
+
+Usuario -> Sistema: Realizar pago
+activate Sistema
+Sistema -> Sistema: Procesar pago
+activate Sistema
+Sistema -> BD: Verificar disponibilidad
+activate BD
+BD --> Sistema: Productos disponibles
+deactivate BD
+Sistema -> Sistema: Descuenta del inventario
+activate Sistema
+Sistema -> BD: Actualiza inventario
+activate BD
+BD --> Sistema: Inventario actualizado
+deactivate BD
+Sistema -> Usuario: Confirmación de pago
+deactivate Sistema
+
+Usuario -> Sistema: Verificar estado del pedido
+activate Sistema
+Sistema -> BD: Consultar estado del pedido
+activate BD
+BD --> Sistema: Estado del pedido
+deactivate BD
+Sistema -> Usuario: Estado del pedido
+deactivate Sistema
+
+@enduml
